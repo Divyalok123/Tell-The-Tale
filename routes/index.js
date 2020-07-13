@@ -3,7 +3,7 @@ const router = express.Router();
 const hommeController = require("../controllers/home_controller");
 
 router.get("/", hommeController.home);
-router.get("/project", require("../controllers/home_controller").project);
+router.get("/project", hommeController.project);
 router.get('/about', hommeController.about);
 router.use("/users", require("./users"));
 router.use('/posts', require('./post'));

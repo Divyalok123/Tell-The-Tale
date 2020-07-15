@@ -1,32 +1,25 @@
-<html>
+<div id="sign-up-box" class="box">
+    <form action="/users/create" method="POST" class="form" id="sign-up-form">
+        <div>
+            <label for="name" class="input-label block">Name</label>
+            <input type="text" id="name" name="name" class="input-field" required>
+        </div>
 
-<head>
-    <title>Sign Up | Tell The Tale</title>
-</head>
+        <div>
+            <label for="email" class="input-label block">Email</label>
+            <input type="email" id="email" name="email" class="input-field" required>
+        </div>
 
-<body>
+        <div>
+            <label for="password" class="input-label block">Password</label>
+            <input type="password" id="password" name="password" class="input-field" required>
+        </div>
 
-    <div id="sign-up-box" class="box">
-        <form action="POST" class="form" id="sign-up-form">
-            <div>
-                <label for="name" class="input-label">Name</label>
-                <input type="text" id="name" name="name" class="input-field">
-            </div>
+        <div>
+            <label for="confirm-pass" class="input-label block">Confirm Password</label>
+            <input type="password" id="confirm-pass" name="confirm_pass" class="input-field" required>
+        </div>
 
-            <div>
-                <label for="email" class="input-label">Email</label>
-                <input type="text" id="email" name="email" class="input-field">
-            </div>
-
-            <div>
-                <label for="password" class="input-label">Password</label>
-                <input type="text" id="password" name="password" class="input-field">
-            </div>
-
-            <input type="submit" id="submit" class="submit-btn">
-        </form>
-    </div>
-
-</body>
-
-</html>
+        <input type="submit" id="submit" class="submit-btn" value="Sign Up">
+    </form>
+</div>

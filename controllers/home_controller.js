@@ -1,5 +1,6 @@
 module.exports.home = function(req, res){
-    // return res.end('<h1>Express is up!</h1>');
+    // console.log(req.cookies); //since cookies are coming in request
+    // res.cookie('user_id', 20);//changing the value of the cookie
     return res.render('home', {
         title: "Tell the tale",
         user: "Divyalok"

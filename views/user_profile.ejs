@@ -1,3 +1,8 @@
-<link rel="stylesheet" href="/css/user_profile.css" >
+<link rel="stylesheet" href="/css/user_profile.css">
 
 <h1>Hey! <%= user %></h1>
+<p> Your Email: <%= email %> looks great! :p </p>
+
+<a href="/users/sign-out" name="user", value="<%= id %>">
+    <button>Sign Out</button>
+</a>

@@ -1,11 +1,9 @@
-/** @format */
-
 const User = require("../models/user");
 
 module.exports.profile = function (req, res) {
     // console.log(req);
 	return res.render("user_profile", {
-		title: 'User_Profile'
+        title: 'User_Profile'
 	});
 };
 
@@ -35,9 +33,6 @@ module.exports.signIn = function (req, res) {
 module.exports.signOut = function(req, res) {
     req.logOut(); //method provided by passport
     return res.redirect('/');
-    // req.session.destroy(function(err){
-    //     res.redirect('/');
-    // });
 }
 
 //get the sign-up data

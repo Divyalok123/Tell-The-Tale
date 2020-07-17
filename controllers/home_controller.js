@@ -3,7 +3,7 @@ module.exports.home = function(req, res){
     // res.cookie('user_id', 20);//changing the value of the cookie
     return res.render('home', {
         title: "Tell the tale",
-        user: "Divyalok"
+        person: "Divyalok"
     })
 };
 

@@ -61,4 +61,5 @@ module.exports.create = function (req, res) {
 
 //get the login data
 module.exports.login = function (req, res) {
+    return res.redirect('/profile'); //session is created
 };

@@ -2,8 +2,7 @@
 const passport = require("passport");
 //requiring passport-local strategy
 const LocalStrategy = require("passport-local").Strategy;
-
-//importing user
+//importing user  
 const User = require("../models/user");
 
 passport.use(
@@ -32,7 +31,7 @@ passport.use(
 //serializing the user to decide the key for the cookies
 //i.e. whichever user signs in we send it's key to the cookie
 passport.serializeUser(function (user, done) {
-	done(null, user);
+	done(null, user.id);
 });
 
 //deserializing the user from the key we get from the cookie
@@ -48,10 +47,20 @@ passport.deserializeUser(function (id, done) {
 
 //check if the user is authenticated
 passport.checkAuthentication = function(req, res, next) {
-    if(req.isAuthenticated()) {
-        return next();
+    if(req.isAuthenticated()) { //this represents whether a user has signed in or not
+		return next(); //if user signed in take him to the next function (controller's action)
     }
-    return res.redirect('/users/sign-in');
+    return res.redirect('/users/sign-in'); //else if not signed in
+}
+
+//set the user for the views
+passport.setAuthenticatedUser = function(req, res, next) {
+	if(req.isAuthenticated()) {
+		//req.user contains the current signed in user from the session cookie 
+		//and we are just sending this to the locals for the views
+		res.locals.user = req.user;
+	}
+	next();
 }
 
 module.exports = passport;

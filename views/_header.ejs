@@ -1,3 +1,20 @@
 <header>
-    This is the header included using partials
+    This is the header included using partials.
+    <ul style="list-style-type: none;"> 
+        <% if (locals.user) { %>
+            <li style="display: inline-block;">
+                <a href="/users/profile"><%= user.name %></a>
+            </li>
+            <li style="display: inline-block;">
+                <a href="/users/sign-out">Sign Out</a>
+            </li>
+        <% } else { %>
+            <li style="display: inline-block;">
+                <a href="/users/sign-in">Sign In</a>
+            </li>
+            <li style="display: inline-block;">
+                <a href="/users/sign-up">Sign Up</a>
+            </li>
+        <% } %>
+    </ul>
 </header>

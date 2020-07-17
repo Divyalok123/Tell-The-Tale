@@ -8,7 +8,12 @@ const db = require("./config/mongoose");
 const session = require("express-session");
 //requiring the passport and the local-strategy we set up
 const passport = require("passport");
-const passportLocal = require("./config/passport-local");
+const passportLocal = require("./config/passport-local-strategy");
+
+//setting up mongo store
+const MongoStore = require('connect-mongo')(session); //(session) argument because we need to store the session informantion in the database 
+
+
 
 //reading post requests
 app.use(express.urlencoded({ extended: true }));
@@ -32,23 +37,30 @@ app.set("views", "./views");
 
 app.use(
 	session({
-		name: "Tell_the_tale",
-		//change it before deployment for production
-		secret: "to_decode_encode", //whenever encryption happens there is a key to encode and decode it, this is used for that
+        name: "Tell_the_tale", //name of cookie
+		secret: 'to_decode_encode', //whenever encryption happens there is a key to encode and decode it, this is used for that
 		saveUninitialized: false,
 		resave: false,
 		cookie: {
-			maxAge: 1000 * 60 * 30, //the expiry time of the cookie
-		},
+			maxAge: (1000 * 60 * 100) //the expiry time of the cookie
+        },
+        store: new MongoStore({
+            mongooseConnection: db,
+            autoRemove: 'disabled'
+        },
+        function(err) { //callback function for the connection
+            console.log(err || 'connect-mongo setup successful');
+        })
 	})
 );
 
 //telling the app to use passport
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
 
 //use express router
-app.use("/", require("./routes/index"));
+app.use("/", require("./routes"));
 
 app.listen(port, function (err) {
 	if (err) {

@@ -3,26 +3,42 @@
 const User = require("../models/user");
 
 module.exports.profile = function (req, res) {
-	// res.end('<h1>Users profile are running!</h1>');
+    // console.log(req);
 	return res.render("user_profile", {
-		user: "Divyalok",
-		title: "Tell the tale",
+		title: 'User_Profile'
 	});
 };
 
 //rendering sign-up page
 module.exports.signUp = function (req, res) {
+    if(req.isAuthenticated()) {
+        return res.redirect('/users/profile');
+    }
+
 	return res.render("user_sign_up", {
-		title: "SignUp | Tell The Tale",
+		title: "Sign Up | Tell The Tale",
 	});
-};
+}
 
 //rendering sign-in page
 module.exports.signIn = function (req, res) {
+    if(req.isAuthenticated()) {
+        return res.redirect('/users/profile');
+    }
+
 	return res.render("user_sign_in", {
-		title: "SignIn | Tell The Tale",
+		title: "Sign In | Tell The Tale",
 	});
-};
+}
+
+//for sign-out
+module.exports.signOut = function(req, res) {
+    req.logOut(); //method provided by passport
+    return res.redirect('/');
+    // req.session.destroy(function(err){
+    //     res.redirect('/');
+    // });
+}
 
 //get the sign-up data
 module.exports.create = function (req, res) {
@@ -59,7 +75,7 @@ module.exports.create = function (req, res) {
     });
 };
 
-//get the login data
+//user has signed in.. now redirect
 module.exports.login = function (req, res) {
-    return res.redirect('/profile'); //session is created
+    return res.redirect('/'); //session is created
 };

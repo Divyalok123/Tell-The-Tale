@@ -76,7 +76,6 @@ module.exports.create = function (req, res) {
             console.log('User exists');
             return res.redirect('back');
         }
-
     });
 };
 

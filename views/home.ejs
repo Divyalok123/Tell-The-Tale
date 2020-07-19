@@ -1,1 +1,9 @@
 <h2>Tell the tale with '<%= person %>' </h2>
+
+<section id="post-section">  
+    <h4>Add a post</h4>
+    <form action="/posts/create" id="post-form" method="POST">
+        <textarea name="content" cols="30" rows="3" placeholder="Write a post..."></textarea>
+        <input type="submit" value="Post">
+    </form>
+</section>

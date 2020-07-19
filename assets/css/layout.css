@@ -9,7 +9,7 @@ body {
   display: none; }
 
 ::selection {
-  background-color: #997928;
+  background-color: #99562f;
   color: white; }
 
 a {
@@ -22,3 +22,6 @@ main {
     resize: none;
     padding: 5px;
     font-family: 'Lato', sans-serif; }
+  main form > * {
+    display: block;
+    margin-top: 10px; }

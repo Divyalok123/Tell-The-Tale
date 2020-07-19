@@ -3,7 +3,23 @@
 <section id="post-section">  
     <h4>Add a post</h4>
     <form action="/posts/create" id="post-form" method="POST">
-        <textarea name="content" cols="30" rows="3" placeholder="Write a post..."></textarea>
+        <textarea name="content" cols="30" rows="3" placeholder="Write a post..." required></textarea>
         <input type="submit" value="Post">
     </form>
+    
+    <ul>
+        <% for(let a of posts) { %>
+            <% console.log(a) %>
+            <li>
+                <p>
+                    <%= a.content %>
+                    <br>
+                    <small>
+                        <%= a.user.name %>
+                    </small>
+                </p>
+            </li>
+        <% } %>
+    </ul>
+    
 </section>

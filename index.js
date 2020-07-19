@@ -9,19 +9,19 @@ const session = require("express-session");
 //requiring the passport and the local-strategy we set up
 const passport = require("passport");
 const passportLocal = require("./config/passport-local-strategy");
-
 //setting up mongo store
 const MongoStore = require('connect-mongo')(session); //(session) argument because we need to store the session informantion in the database 
-
+//requiring sass middleware
 const sassMiddleware = require('node-sass-middleware');
 
+//just before the server starts so that we can precompile it before the server starts and whenever the browser asks for it, these precompiled files will be provided 
 app.use(sassMiddleware({
 	src: './assets/scss',
 	dest: './assets/css',
 	debug: true, //it should be false in production mode
 	outputStyle: 'extended', //whether we want it to be single line or multiline
 	prefix: '/css' //where should the server look for css files
-})); //just before the server starts so that we can precompile it before the server starts and whenever the browser asks for it, these precompiled files will be provided 
+})); 
 
 //reading post requests
 app.use(express.urlencoded({ extended: true }));

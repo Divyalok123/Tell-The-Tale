@@ -1,8 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish&family=Roboto&family=Sora:wght@500&display=swap");
 body {
-  background-color: black;
-  color: wheat;
-  text-align: center;
-  font-family: monospace; }
+  margin: 0;
+  color: #31302d;
+  font-family: 'Roboto', sans-serif; }
+
+::selection {
+  background-color: #997928;
+  color: white; }
 
 a {
   color: inherit; }
+
+main {
+  margin-top: 68px;
+  text-align: center; }

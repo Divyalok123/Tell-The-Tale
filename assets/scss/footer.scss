@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish&family=Roboto&family=Sora:wght@500&display=swap');
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: black;
+    padding: 10px 18px;
+    box-sizing: border-box;
+    background-color: wheat;
+    font-family: 'Mulish', sans-serif;
+
+    & > * {
+        display: inline-block;
+    }
+
+    ul {
+        li {
+            list-style: none;
+            display: inline-block;
+            a {
+                text-decoration: none;
+                margin: 0 10px;
+                
+                &:hover {
+                    color: gray;
+                }
+            }
+        }
+    }
+}

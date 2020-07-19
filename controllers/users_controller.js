@@ -3,7 +3,7 @@ const User = require("../models/user");
 module.exports.profile = function (req, res) {
     // console.log(req);
 	return res.render("user_profile", {
-        title: 'User_Profile'
+        title: 'Profile'
 	});
 };
 

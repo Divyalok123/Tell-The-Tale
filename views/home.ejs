@@ -1,15 +1,15 @@
-<h2>Tell the tale with '<%= person %>' </h2>
-
-<section id="post-section">  
-    <h4>Add a post</h4>
+<section id="post-section">
+    <h2>Posts</h2>  
+    <% if(locals.user) { %>
     <form action="/posts/create" id="post-form" method="POST">
+        <h4>Add a post</h4>
         <textarea name="content" cols="30" rows="3" placeholder="Write a post..." required></textarea>
         <input type="submit" value="Post">
     </form>
+    <% } %>
     
     <ul>
         <% for(let a of posts) { %>
-            <% console.log(a) %>
             <li>
                 <p>
                     <%= a.content %>

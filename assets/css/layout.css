@@ -1,9 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Mulish&family=Roboto&family=Sora:wght@500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 body {
-  margin: 0;
-  color: #31302d;
-  font-family: 'Roboto', sans-serif; }
+  margin: 0; }
 
 ::-webkit-scrollbar {
   display: none; }
@@ -12,19 +10,5 @@ body {
   background-color: #99562f;
   color: white; }
 
-h2 {
-  text-align: center; }
-
 a {
   color: inherit; }
-
-main {
-  width: 70%;
-  margin: 70px auto; }
-  main form textarea {
-    resize: none;
-    padding: 5px;
-    font-family: 'Lato', sans-serif; }
-  main form > * {
-    display: block;
-    margin-top: 10px; }

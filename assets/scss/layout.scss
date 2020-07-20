@@ -3,8 +3,6 @@
 
 body {
     margin: 0;
-    color: #31302d;
-    font-family: 'Roboto', sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -16,28 +14,6 @@ body {
     color: white;
 }
 
-h2 {
-    text-align: center;
-}
-
 a {
     color: inherit;
-}
-
-main {
-    width: 70%;
-    margin: 70px auto;
-
-    form {
-        textarea {
-            resize: none;
-            padding: 5px;
-            font-family: 'Lato', sans-serif;
-        }
-
-        &>* {
-            display: block;
-            margin-top: 10px;
-        }
-    }
 }

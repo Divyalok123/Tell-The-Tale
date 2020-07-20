@@ -1,0 +1,32 @@
+h2 {
+    text-align: center;
+}
+
+main {
+    width: 90%;
+    margin: 70px auto;
+    font-family: 'Roboto', sans-serif;
+    form {
+        textarea {
+            resize: none;
+            padding: 5px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        &>* {
+            display: block;
+            margin-top: 10px;
+        }
+    }
+
+    display: flex;
+
+    #post-section {
+        width: 70%;
+    }
+
+    #friends-list {
+        width: 30%;
+        border-left: 1px solid black;
+    }
+}

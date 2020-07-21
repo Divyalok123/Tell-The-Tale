@@ -44,7 +44,9 @@ module.exports.signIn = function (req, res) {
 //for sign-out
 module.exports.signOut = function(req, res) {
     req.logOut(); //method provided by passport
-    return res.redirect('/');
+    req.flash('success', 'Logged Out Successfully'); //this message needs to tranfered to response 
+
+    return res.redirect('/'); //we can pass the flash message to locals here but we will create a custom middle ware for that
 }
 
 //get the sign-up data
@@ -82,7 +84,11 @@ module.exports.create = function (req, res) {
     });
 };
 
-//user has signed in.. now redirect
+//signing in
 module.exports.login = function (req, res) {
+    //creating flash message
+             /*type*/      /*message*/
+    req.flash('success', 'Logged in Successfully');
     return res.redirect('/'); //session is created
 };
+

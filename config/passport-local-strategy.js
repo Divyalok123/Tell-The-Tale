@@ -9,16 +9,19 @@ passport.use(
 	new LocalStrategy(
 		{
 			usernameField: 'email',
+			passReqToCallback: true //this allows us to set the first argument as request
 		},
-		function (email, password, done) {
+		function (req, email, password, done) {
 			//done is the callback reporting to passport.js
 			User.findOne({ email: email }, function (err, user) {
 				if (err) {
-					console.log("Error occured while finding User!");
+					// console.log("Error occured while finding User!");
+					req.flash('error', err);
 					return done(err); //reporting error to passport
 				}
 				if (!user || user.password != password) {
-					console.log("Invalid Username/Password!");
+					// console.log("Invalid Username/Password!");
+					req.flash('error', 'Invalid Username/Password');
 					return done(null, false); //first argument (representing error)-> no error and second argument (user found or not) -> not found
 				}
 				console.log("User found!");

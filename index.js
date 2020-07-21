@@ -13,6 +13,10 @@ const passportLocal = require("./config/passport-local-strategy");
 const MongoStore = require('connect-mongo')(session); //(session) argument because we need to store the session informantion in the database 
 //requiring sass middleware
 const sassMiddleware = require('node-sass-middleware');
+//for flash messages
+const flash = require('connect-flash');
+//requiring custom middleware for flash messages
+const flashware = require('./config/middleware');
 
 //just before the server starts so that we can precompile it before the server starts and whenever the browser asks for it, these precompiled files will be provided 
 app.use(sassMiddleware({
@@ -66,6 +70,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+
+app.use(flash());
+//using custom flash middleware
+app.use(flashware.setFlash);
 
 //use express router
 app.use("/", require("./routes"));

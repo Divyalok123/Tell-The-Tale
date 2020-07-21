@@ -3,22 +3,50 @@
         <title>
             <%= title %>
         </title>
+        <!-- For notifications  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+        <!---->
         <link href="/css/layout.css" rel="stylesheet" >
         <link href="/css/header.css" rel="stylesheet" >
         <link href="/css/footer.css" rel="stylesheet" >
         <link href="/css/home.css" rel="stylesheet" >
+        <link rel="stylesheet" href="/css/user_profile.css" >
         <%- style %>
     </head>
     <body>
 
         <%- include('_header'); %>
 
-        <main>
+        <main id="layout-main">
             <%- body %> <!-- This is defined in library -->
         </main>
 
         <%- include('_footer'); %>
 
         <%- script %>
+
+        <!-- Accessing flash messages and displaying with noty -->
+        <script>
+            <% if(flash.success && flash.success.length > 0) { %>
+                new Noty({
+                    theme: 'relax',
+                    text: '<%= flash.success %>',
+                    type: 'success',
+                    layout: 'topCenter',
+                    timeout: 1000
+                }).show();
+            <% } %> 
+
+            <% if(flash.error && flash.error.length > 0) { %>
+                new Noty({
+                    theme: 'relax',
+                    text: '<%= flash.error %>',
+                    type: 'error',
+                    layout: 'topRight',
+                    timeout: 1200
+                }).show();
+            <% } %> 
+        </script>
     </body>
 </html>

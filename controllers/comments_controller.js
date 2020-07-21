@@ -1,48 +1,43 @@
-const Comment = require('../models/comment');
-const Post = require('../models/post');
+const Comment = require("../models/comment");
+const Post = require("../models/post");
 
-module.exports.create = function(req, res){
-    Post.findById(req.body.post_id, function(err, post){
-        if(post) {
-            Comment.create({
-                content: req.body.content,
-                post: req.body.post_id,
-                user: req.user._id
-            }, function(err, comment){
-                if(err) {
-                    console.log('Error occured while creating comment!');
-                    return;
-                }
+module.exports.create = async function (req, res) {
+	try {
+		let post = await Post.findById(req.body.post_id);
 
-                post.comments.push(comment);
-                post.save();
+		if (post) {
+			let comment = await Comment.create({
+				content: req.body.content,
+				post: req.body.post_id,
+				user: req.user._id,
+			});
 
-                return res.redirect('/');
-            })
-        }
-    });
+			post.comments.push(comment);
+			post.save();
+
+			return res.redirect("/");
+		}
+	} catch (err) {
+		console.log("Error occured while creating comment: ", err);
+		return;
+	}
 };
 
-module.exports.destroy = function(req, res) {
-    Comment.findById(req.params.id, function(err, comment){
-        if(err) {
-            console.log('Error occured while finding comment for the id: ', req.params.id);
-            return;
-        }
+module.exports.destroy = async function (req, res) {
+	try {
+		let comment = await Comment.findById(req.params.id);
 
-        if(comment.user == req.user.id) {
-            //before deleting a comment we need to get the post id of the comment
-            //and then find the comment in the post and delete from there too
-
-            let postid = comment.post;
-
-            comment.remove();
-                                                    //pull this comment id from comments in found post and delete it (updating the post) 
-            Post.findByIdAndUpdate(postid, { $pull: {comments: req.params.id}}, function(err, post){
-                return res.redirect('back');
-            })
-        }
-        else
-            return res.redirect('back');
-    });
-}
+		if (comment.user == req.user.id) {
+			//before deleting a comment we need to get the post id of the comment
+			//and then find the comment in the post and delete from there too
+			let postid = comment.post;
+			comment.remove();
+			//pull this comment id from comments in found post and delete it (updating the post)
+			let post = Post.findByIdAndUpdate(postid, { $pull: { comments: req.params.id }});
+		}
+		return res.redirect("back");
+	} catch (err) {
+		console.log("Error Occured while destroying comment: ", err);
+		return;
+	}
+};

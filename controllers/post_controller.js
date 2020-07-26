@@ -3,12 +3,27 @@ const Comment = require("../models/comment");
 
 module.exports.create = async function (req, res) {
 	try{
-		await Post.create(
+			let post = await Post.create(
 			{
 				content: req.body.content,
 				user: req.user._id,
 			});
-			req.flash('success', 'Post Published');
+			//check if the request is a ajax request from home_post.js createpost
+			//xhr -> xml http request
+			if(req.xhr)
+			{
+				// console.log(post);
+						//200->success
+				req.flash('success', 'Post Published!');
+				return res.status(200).json({
+					data: {
+						post: post
+					},
+					message: 'Post created!' //this will check if the post is created
+				});
+			}
+
+			req.flash('success', 'Post Published!');
 			return res.redirect("back");
 	}catch(err){
 		req.flash('error', `Error! ${err}`);
@@ -47,7 +62,6 @@ module.exports.destroy = function (req, res) {
 module.exports.destroy = async function (req, res) {
 	try {
 		let post = await Post.findById(req.params.id);
-
 		if (post.user == req.user.id) {
 			//deleting the post
 			post.remove();
@@ -56,6 +70,16 @@ module.exports.destroy = async function (req, res) {
 			await Comment.deleteMany({
 				post: req.params.id,
 			});
+
+			if(req.xhr) {
+				return res.status(200).json({
+					data: {
+						post_id: req.params.id
+					},
+					message: 'Post deleted!'
+				});
+			}
+
 			req.flash('success', 'Post is deleted!');
 		} else {
 			req.flash('error', "You can't delete this post!");

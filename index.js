@@ -4,7 +4,7 @@ const app = express();
 const port = 8000;
 const expressLayouts = require("express-ejs-layouts");
 const db = require("./config/mongoose");
-//express session (user for session cookie)
+//express session (used for session cookie)
 const session = require("express-session");
 //requiring the passport and the local-strategy we set up
 const passport = require("passport");
@@ -50,7 +50,7 @@ app.set("views", "./views");
 app.use(
 	session({
         name: "Tell_the_tale", //name of cookie
-		secret: 'to_decode_encode', //whenever encryption happens there is a key to encode and decode it, this is used for that
+		secret: 'to_decode_encode', //whenever encryption happens there is a key to encode and decode it, this is used for that *(it should be changed)*
 		saveUninitialized: false,
 		resave: false,
 		cookie: {

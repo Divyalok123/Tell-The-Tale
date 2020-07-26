@@ -14,7 +14,9 @@ module.exports.update = function(req, res) {
         User.findByIdAndUpdate(req.params.id, req.body, function(err) {
             return res.redirect('back');
         });
+        req.flash('success', 'Profile Updated Successfully!');
     } else {
+        req.flash('error', 'Error updating profile');
         return res.status(401).send('Unauthorized');
     }
 }
@@ -73,11 +75,13 @@ module.exports.create = function (req, res) {
                     console.log('Error in creating the user!');
                     return;
                 }
+                req.flash('success', 'You have signed up successfully!');
                 return res.redirect('/users/sign-in');
             });
         }
         else
         {
+            req.flash('error', 'Already registered! Please sign in. ')
             return res.redirect('back');
         }
 

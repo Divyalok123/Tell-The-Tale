@@ -26,7 +26,7 @@ passport.use(
 				}
 				console.log("User found!");
 				return done(null, user); //user found.. now passing the user
-			});
+			});0
 		},
 	),
 );

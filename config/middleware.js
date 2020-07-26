@@ -1,3 +1,5 @@
+//Setting up flash middleware
+
 module.exports.setFlash = function(req, res, next) {
     //in the locals we will set the flash message 
     res.locals.flash = {

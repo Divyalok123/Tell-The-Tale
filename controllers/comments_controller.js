@@ -15,9 +15,11 @@ module.exports.create = async function (req, res) {
 			post.comments.push(comment);
 			post.save();
 
+			req.flash('success', 'Comment added!');
 			return res.redirect("/");
 		}
 	} catch (err) {
+		req.flash('error', 'Error posting comment!');
 		console.log("Error occured while creating comment: ", err);
 		return;
 	}
@@ -33,10 +35,12 @@ module.exports.destroy = async function (req, res) {
 			let postid = comment.post;
 			comment.remove();
 			//pull this comment id from comments in found post and delete it (updating the post)
-			let post = Post.findByIdAndUpdate(postid, { $pull: { comments: req.params.id }});
+			let post = Post.findByIdAndUpdate(postid, { $pull: { comments: req.params.id }}); /* $pull is mongodb syntax */
 		}
+		req.flash('success', 'Comment deleted!');
 		return res.redirect("back");
 	} catch (err) {
+		req.flash('error', 'Error deleting comment!');
 		console.log("Error Occured while destroying comment: ", err);
 		return;
 	}

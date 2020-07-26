@@ -4,8 +4,7 @@ h2 {
 main {
   width: 90%;
   margin: 70px auto;
-  font-family: 'Roboto', sans-serif;
-  display: flex; }
+  font-family: 'Roboto', sans-serif; }
   main form textarea {
     resize: none;
     padding: 5px;
@@ -13,8 +12,11 @@ main {
   main form > * {
     display: block;
     margin-top: 10px; }
-  main #post-section {
+
+#home_div {
+  display: flex; }
+  #home_div #post-section {
     width: 70%; }
-  main #friends-list {
+  #home_div #friends-list {
     width: 30%;
     border-left: 1px solid black; }

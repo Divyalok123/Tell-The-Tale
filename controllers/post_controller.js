@@ -1,32 +1,34 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
+const User = require("../models/user");
 
 module.exports.create = async function (req, res) {
-	try{
-			let post = await Post.create(
-			{
-				content: req.body.content,
-				user: req.user._id,
-			});
-			//check if the request is a ajax request from home_post.js createpost
-			//xhr -> xml http request
-			if(req.xhr)
-			{
-				// console.log(post);
-						//200->success
-				req.flash('success', 'Post Published!');
-				return res.status(200).json({
-					data: {
-						post: post
-					},
-					message: 'Post created!' //this will check if the post is created
-				});
-			}
+	try {
+		let post = await Post.create({
+			content: req.body.content,
+			user: req.user._id,
+		});
 
-			req.flash('success', 'Post Published!');
-			return res.redirect("back");
-	}catch(err){
-		req.flash('error', `Error! ${err}`);
+		//check if the request is a ajax request from home_post.js createpost
+		//xhr -> xmlHttpRequest
+		if (req.xhr) {
+			//populating user with name
+			//execPopulate needs to be called for an existing document for populate to execute
+			let new_post = await post.populate("user", "name").execPopulate();
+			// console.log("poulated post:", post);
+			return res.status(200).json({
+				//200 → success
+				data: {
+					post: new_post,
+				},
+				message: "Post created!", //this will check if the post is created
+			});
+		}
+
+		req.flash("success", "Post Published!");
+		return res.redirect("back");
+	} catch (err) {
+		req.flash("error", `Error! ${err}`);
 		return res.redirect("back");
 	}
 };
@@ -71,23 +73,23 @@ module.exports.destroy = async function (req, res) {
 				post: req.params.id,
 			});
 
-			if(req.xhr) {
+			if (req.xhr) {
 				return res.status(200).json({
 					data: {
-						post_id: req.params.id
+						post_user_id: req.params.id,
 					},
-					message: 'Post deleted!'
+					message: "Post deleted!",
 				});
 			}
 
-			req.flash('success', 'Post is deleted!');
+			req.flash("success", "Post is deleted!");
 		} else {
-			req.flash('error', "You can't delete this post!");
+			req.flash("error", "You can't delete this post!");
 		}
-		
+
 		return res.redirect("back");
 	} catch (err) {
-		req.flash('error', `Error! ${err}`);
+		req.flash("error", `Error! ${err}`);
 		return res.redirect("back");
 	}
 };

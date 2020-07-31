@@ -3,7 +3,8 @@
 	//we need two function one which sends the data and one who receives it
 
 	//method to submit the form data for a new post using AJAX
-	//a function which sends the data to the controller action
+    //a function which sends the data to the controller action
+
 	let createPost = function () {
 		let newPostForm = $("#post-form");
 		//preventing the default behaviour
@@ -17,14 +18,17 @@
 				success: function (data) {
 					let newPost = newPostDom(data.data.post);
 					$("#posts-list-container").prepend(newPost);
-					new Noty({
+                    deletePost($(" .delete-post-button", newPost)); //delete-post-button inside newPost to delete a post
+                    
+                    new ajax_comment(data.data.post._id);
+
+                    new Noty({
 						theme: "sunset",
 						text: "Post created!",
 						type: "success",
 						layout: "topRight",
 						timeout: 1000
-					}).show();
-					deletePost($(" .delete-post-button", newPost)); //delete-post-button inside newPost to delete a post 
+                    }).show();
 				},
 				error: function (error) {
 					console.log(error.responseText);
@@ -33,7 +37,7 @@
 						text: "Error!: " + error.responseText,
 						type: "alert",
 						layout: "topRight",
-						timeout: 1100,
+						timeout: 1100
 					}).show();
 				},
 			});
@@ -97,7 +101,7 @@
 						layout: "topRight",
 						timeout: 1100
 					}).show();
-				},
+				}
 			});
 		});
     };

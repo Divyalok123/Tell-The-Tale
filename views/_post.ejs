@@ -13,14 +13,14 @@
     </p>
     <div class="post-comments">
         <% if (locals.user) { %>
-        <form action="/comments/create" id="comment-form" method="POST">
+        <form action="/comments/create" id="comment-<%=post._id%>-form" method="POST">
             <input type="text" name="content" placeholder="Comment goes here..." required>
             <input type="hidden" name="post_id" value="<%= post._id %>"> <!--Hidden-->
             <input type="submit" value="Add Comment">
         </form>
         <% } %>
         <div class="post-comments-list">
-            <ul id="post-comments-<%= post._id %>">
+            <ul id="comments-post-<%= post._id %>">
                 <% for (comment of post.comments) { %>
                 <%- include('_comment') -%>
                 <% } %>
@@ -28,4 +28,3 @@
         </div>
     </div>
 </li>
-<script src="/js/post_comments.js"></script>

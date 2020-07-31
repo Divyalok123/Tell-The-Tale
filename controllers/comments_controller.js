@@ -53,11 +53,14 @@ module.exports.destroy = async function (req, res) {
 				return res.status(200).json({
 					data: {
 						comment_id: req.params.id
-					}
+					},
+					message: "Comment deleted!"
 				});
 			}
 
 			req.flash("success", "Comment deleted!");
+		} else {
+			req.flash("error", "Unauthorized");
 		}
 		return res.redirect("back");
 	} catch (err) {

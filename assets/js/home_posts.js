@@ -18,9 +18,9 @@
 				success: function (data) {
 					let newPost = newPostDom(data.data.post);
 					$("#posts-list-container").prepend(newPost);
-                    deletePost($(" .delete-post-button", newPost)); //delete-post-button inside newPost to delete a post
-                    
-                    new ajax_comment(data.data.post._id);
+                    deletePost($(' .delete-post-button', newPost)); //delete-post-button inside newPost to delete a post
+                    ajax_comment(data.data.post._id);
+                    // new ajax_comment(data.data.post._id);
 
                     new Noty({
 						theme: "sunset",
@@ -60,13 +60,13 @@
                 </small>
             </p>
             <div class="post-comments">
-                <form action="/comments/create" method="POST">
+                <form action="/comments/create" id="comment-${post._id}-form"method="POST">
                     <input type="text" name="content" placeholder="Comment goes here..." required>
                     <input type="hidden" name="post_id" value="${post._id}"> <!--Hidden-->
                     <input type="submit" value="Add Comment">
                 </form>
                 <div class="post-comments-list">
-                    <ul id="post-comments-${post._id}">
+                    <ul id="comments-post-${post._id}">
                     </ul>
                 </div>
             </div>
@@ -109,11 +109,14 @@
     //function to apply delete to every post
     function applyDeleteToAllPosts() {
         //getting all the posts
-        let allposts = $('#posts-list-container>li');
+        let allposts = $('#posts-list-container > li');
         //looping through the posts
         for(let everysinglepost of allposts) {
             //applying delete to every post
-            deletePost($(" .delete-post-button",everysinglepost));
+            deletePost($(" .delete-post-button", everysinglepost));
+            let idPost = $(everysinglepost).prop('id').split('-')[1];
+            ajax_comment(idPost);
+            // new ajax_comment(idPost);
         }
     }
 

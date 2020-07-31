@@ -1,34 +1,21 @@
 //similar to /js/home_post.js
 //we will get the idPost (id of the post) from home_post.js
-class ajax_comment {
-    constructor(idPost) {
-        this.idPost = idPost;
-        this.thePost = $(`#post-${idPost}`);
-        this.commentForm = $(`#comment-${idPost}-form`);
+function ajax_comment(idPost) {
+	let createComment = function () {
+		let commentForm = $(`#comment-${idPost}-form`);
+		let thePost = $(`#post-${idPost}`);
 
-        this.createComment(idPost);
-
-        let thisself = this;
-        $(' .delete-comment-button', this.thePost).each(function(){
-            thisself.deleteComment($(this));
-        });
-    }
-    
-    createComment(idPost) {
-        let coSelf = this;
-
-		this.commentForm.submit(function (e) {
+		commentForm.submit(function (e) {
 			e.preventDefault();
-            let thisself = this;
+
 			$.ajax({
 				type: "post",
 				url: "/comments/create",
-				data: $(thisself).serialize(),
+				data: commentForm.serialize(),
 				success: function (data) {
-					let commentList = $(`#comments-post-${idPost}`);
-                    let newCommentWithData = coSelf.commentDOM(data.data.comment);
-					commentList.prepend(newCommentWithData);
-					coSelf.deleteComment($(" .delete-comment-button", newCommentWithData));
+                    let newCommentWithData = commentDOM(data.data.comment);
+					$(`#comments-post-${idPost}`).prepend(newCommentWithData);
+					deleteComment($(' .delete-comment-button', newCommentWithData));
 
 					new Noty({
 						theme: "sunset",
@@ -50,11 +37,11 @@ class ajax_comment {
 				},
 			});
 		});
-	}
+	};
 
-	commentDOM(comment) {
+	let commentDOM = function (comment) {
 		return $(
-			    `<li id="comment-${comment._id}">
+			`<li id="comment-${comment._id}">
                     <p>
                         <small>
                             <a class="delete-comment-button" href="/comments/destroy/${comment._id}">x</a>
@@ -65,11 +52,11 @@ class ajax_comment {
                             ${comment.user.name}
                         </small>
                     </p>
-                </li>`
-		        );
-	}
+                </li>`,
+		);
+	};
 
-	deleteComment(deleteCommentLink) {
+	let deleteComment = function(deleteCommentLink) {
 		$(deleteCommentLink).click(function (e) {
 			e.preventDefault();
 
@@ -101,31 +88,47 @@ class ajax_comment {
 		});
 	}
 
+	function applyDeleteToAllComments() {
+		let allcomments = $(`#comments-post-${idPost} > li`);
+		for(let singleComment of allcomments) {
+			deleteComment($('.delete-comment-button', singleComment));
+		}
+    }
+
+	createComment();
+	applyDeleteToAllComments();
 }
 
 
-
-
-// //similar to /js/home_post.js
 // //we will get the idPost (id of the post) from home_post.js
-// function ajax_comment(idPost) {
-// 	let createComment = function () {
-// 		let commentForm = $(`#comment-${idPost}-form`);
-// 		let thePost = $(`#post-${idPost}`);
+// class ajax_comment {
+//     constructor(idPost) {
+//         this.idPost = idPost;
+//         this.thePost = $(`#post-${idPost}`);
+//         this.commentForm = $(`#comment-${idPost}-form`);
 
-// 		commentForm.submit(function (e) {
+//         this.createComment(idPost);
+
+//         let thisself = this;
+//         $(' .delete-comment-button', this.thePost).each(function(){
+//             thisself.deleteComment($(this));
+//         });
+//     }
+    
+//     createComment(idPost) {
+//         let coSelf = this;
+
+// 		this.commentForm.submit(function (e) {
 // 			e.preventDefault();
-
+//             let thisself = this;
 // 			$.ajax({
-// 				type: "post",
-// 				url: "/comments/create",
-// 				data: commentForm.serialize(),
+// 				type: 'post',
+// 				url: '/comments/create',
+// 				data: $(thisself).serialize(),
 // 				success: function (data) {
-// 					let commentList = $(`#comments-post-${idPost}`);
-//                     let newCommentWithData = commentDOM(data.data.comment);
-//                     // console.log(newCommentWithData);
-// 					commentList.prepend(newCommentWithData);
-// 					deleteComment(".delete-comment-button", newCommentWithData);
+//                     let newCommentWithData = coSelf.commentDOM(data.data.comment);
+// 					$(`#comments-post-${idPost}`).prepend(newCommentWithData);
+// 					coSelf.deleteComment($(" .delete-comment-button", newCommentWithData));
 
 // 					new Noty({
 // 						theme: "sunset",
@@ -147,14 +150,14 @@ class ajax_comment {
 // 				},
 // 			});
 // 		});
-// 	};
+// 	}
 
-// 	let commentDOM = function (comment) {
+// 	commentDOM(comment) {
 // 		return $(
-// 			`<li id="comment-${comment._id}">
+// 			    `<li id="comment-${comment._id}">
 //                     <p>
 //                         <small>
-//                             <a href="/comments/destroy/${comment._id}">x</a>
+//                             <a class="delete-comment-button" href="/comments/destroy/${comment._id}">x</a>
 //                         </small>
 //                             ${comment.content}
 //                         <br>
@@ -162,11 +165,11 @@ class ajax_comment {
 //                             ${comment.user.name}
 //                         </small>
 //                     </p>
-//                 </li>`,
-// 		);
-// 	};
+//                 </li>`
+// 		        );
+// 	}
 
-// 	let deleteComment = function (deleteCommentLink) {
+// 	deleteComment(deleteCommentLink) {
 // 		$(deleteCommentLink).click(function (e) {
 // 			e.preventDefault();
 
@@ -175,7 +178,6 @@ class ajax_comment {
 // 				url: $(deleteCommentLink).prop("href"),
 // 				success: function (data) {
 // 					$(`#comment-${data.data.comment_id}`).remove();
-
 // 					new Noty({
 // 						theme: "sunset",
 // 						text: "Comment Deleted!",
@@ -197,12 +199,8 @@ class ajax_comment {
 // 				},
 // 			});
 // 		});
-// 	};
+// 	}
 
-// 	// function applyDeleteToAllComments() {
-
-//     // }
-
-// 	createComment();
-// 	// applyDeleteToAllComments();
 // }
+
+

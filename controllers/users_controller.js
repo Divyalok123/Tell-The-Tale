@@ -17,7 +17,7 @@ module.exports.update = async function(req, res) {
         try {
             let user = await User.findById(req.params.id);
 
-            /* Something to note: I wont be able to access the fields of UserSchema directly 
+            /* Something to note: We wont be able to access the fields of UserSchema directly 
             from req.params since the enctype is multipart now and the bodyparser is not able to parse it. 
             Here multer (precisely uploadAvatar as it has a req also) will help us */
 
@@ -31,13 +31,18 @@ module.exports.update = async function(req, res) {
                 if(req.file) {
                     //handling the edge case: whenever we were uploading an avatar 
                     //all the previous avatars remain.. we don't want that and only want
-                    //to keep the lastest one
+                    //to keep the latest one
 
                     if(user.avatar) {
                         //for deleting the avatar we will need the module filesystem(fs)
                         //and also the path module
-
-                        fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                        let thePath = path.join(__dirname, '..', user.avatar)
+                        fs.stat(thePath, function(err, stats){ ///to check file before deleting whether it exists or not
+                            if(err) {
+                                return console.error('Getting error: ', err);
+                            }
+                            fs.unlinkSync(thePath);
+                        });
                     }
 
                     //saving the path of the uploaded file into the avatar field in the user
@@ -45,6 +50,7 @@ module.exports.update = async function(req, res) {
                 }
                 user.save();
                 return res.redirect('back');
+                
             });
             req.flash('success', 'Profile Updated Successfully!');
         } catch(err) {

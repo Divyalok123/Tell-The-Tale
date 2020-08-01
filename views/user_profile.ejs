@@ -1,17 +1,19 @@
 <div class="user-profile-div">
-    <h1>Hey! <%= user_profile.name %></h1>
-    <p>Your email: '<%= user_profile.email %>', looks cool :p</p>
+    <div id="user-details">
+        <h1>Hey! <%= user_profile.name %></h1>
+        <p>Your email: '<%= user_profile.email %>', looks cool :p</p>
 
-    <% if(user.id == user_profile.id) { %>
-        <h4>Update Profile</h4>                                            <!-- ↓ For files etc. ↓ -->
-        <form action="/users/update/<%= user_profile.id %>" method="POST" enctype="multipart/form-data">
-            <input type="text" name="name" placeholder="Name" value="<%= user_profile.name %>" required>
-            <input type="email" name="email" placeholder="Email" value="<%= user_profile.email %>" required>
-            <input type="file" name="avatar" placeholder="Profile Picture">
-            <input type="submit" value="Update">
-        </form>
-    <% } %>
-    
+        <% if(user.id == user_profile.id) { %>
+            <h4>Update Profile</h4>                                            <!-- ↓ For files etc. ↓ -->
+            <form action="/users/update/<%= user_profile.id %>" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Name" value="<%= user_profile.name %>" required>
+                <input type="email" name="email" placeholder="Email" value="<%= user_profile.email %>" required>
+                <input type="file" name="avatar" placeholder="Profile Picture">
+                <input type="submit" value="Update">
+            </form>
+        <% } %>
+    </div>
+
     <div id="user-image">
         <img src="<%=user.avatar%>" alt="<%=user.name%>" width="150px" height="150px">
     </div>

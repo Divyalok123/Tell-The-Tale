@@ -43,7 +43,7 @@ let storage = multer.diskStorage({
 
 //defining static function                                   /* ↓ this tells that only one file(instance) will be uploaded for fieldname avatar */
 userSchema.statics.uploadedAvatar = multer({storage: storage}).single('avatar');
-                                         // ↑ setting storage feild
+                                         /* ↑ setting storage feild */
 userSchema.statics.avatarPath = AVATAR_PATH; //making AVATAR_PATH publicly available 
 
 

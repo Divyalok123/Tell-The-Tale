@@ -1,5 +1,8 @@
 const User = require("../models/user");
 
+const fs = require('fs');
+const path = require('path');
+
 module.exports.profile = function (req, res) {
     User.findById(req.params.id, function(err, user){
         return res.render("user_profile", {
@@ -17,7 +20,7 @@ module.exports.update = async function(req, res) {
             /* Something to note: I wont be able to access the fields of UserSchema directly 
             from req.params since the enctype is multipart now and the bodyparser is not able to parse it. 
             Here multer (precisely uploadAvatar as it has a req also) will help us */
-            
+
             User.uploadedAvatar(req, res, function(err) {
                 if(err)
                     console.log('**Multer Error: **', err);
@@ -26,6 +29,17 @@ module.exports.update = async function(req, res) {
                 user.email = req.body.email;
 
                 if(req.file) {
+                    //handling the edge case: whenever we were uploading an avatar 
+                    //all the previous avatars remain.. we don't want that and only want
+                    //to keep the lastest one
+
+                    if(user.avatar) {
+                        //for deleting the avatar we will need the module filesystem(fs)
+                        //and also the path module
+
+                        fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                    }
+
                     //saving the path of the uploaded file into the avatar field in the user
                     user.avatar = User.avatarPath + '/' + req.file.filename;
                 }

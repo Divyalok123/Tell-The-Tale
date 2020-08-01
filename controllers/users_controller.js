@@ -37,12 +37,22 @@ module.exports.update = async function(req, res) {
                         //for deleting the avatar we will need the module filesystem(fs)
                         //and also the path module
                         let thePath = path.join(__dirname, '..', user.avatar)
-                        fs.stat(thePath, function(err, stats){ ///to check file before deleting whether it exists or not
-                            if(err) {
-                                return console.error('Getting error: ', err);
-                            }
-                            fs.unlinkSync(thePath);
-                        });
+                        
+                        /* -- Way 1 -- */
+                        // fs.stat(thePath, function(err, stats){ ///to check file before deleting whether it exists or not
+                        //     if(err) {
+                        //         return console.error('Getting error: ', err);
+                        //     }
+                        //     fs.unlinkSync(thePath);
+                        // });
+
+                        /* -- Way 2 (better way) */
+                        if(fs.existsSync(thePath)) {
+                            fs.unlink(thePath, (err)=>{
+                                if(err) throw err;
+                                console.log('successfully deleted files!');
+                            })
+                        }
                     }
 
                     //saving the path of the uploaded file into the avatar field in the user

@@ -9,12 +9,34 @@ module.exports.profile = function (req, res) {
     });
 };
 
-module.exports.update = function(req, res) {
+module.exports.update = async function(req, res) {
     if(req.user.id == req.params.id) {
-        User.findByIdAndUpdate(req.params.id, req.body, function(err) {
-            return res.redirect('back');
-        });
-        req.flash('success', 'Profile Updated Successfully!');
+        try {
+            let user = await User.findById(req.params.id);
+
+            /* Something to note: I wont be able to access the fields of UserSchema directly 
+            from req.params since the enctype is multipart now and the bodyparser is not able to parse it. 
+            Here multer (precisely uploadAvatar as it has a req also) will help us */
+            
+            User.uploadedAvatar(req, res, function(err) {
+                if(err)
+                    console.log('**Multer Error: **', err);
+                // console.log(req.file);
+                user.name = req.body.name; //without multer we won't be able to do this
+                user.email = req.body.email;
+
+                if(req.file) {
+                    //saving the path of the uploaded file into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+            });
+            req.flash('success', 'Profile Updated Successfully!');
+        } catch(err) {
+            req.flash('error',err);
+            res.redirect('back');
+        }
     } else {
         req.flash('error', 'Error updating profile');
         return res.status(401).send('Unauthorized');

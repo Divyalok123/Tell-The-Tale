@@ -9,7 +9,6 @@ let opts = {
     secretOrKey: 'tell_the_tale'
 }
 
-
 //telling passport to user JWT strategy
 passport.use(new JWTStrategy(opts, function(jwtPayload, done){ //payload contains the info of the user and done is the callback     
     User.findById(jwtPayload._id, function(err, user){

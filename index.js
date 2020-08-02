@@ -9,6 +9,7 @@ const session = require("express-session");
 //requiring the passport and the local-strategy we set up
 const passport = require("passport");
 const passportLocal = require("./config/passport-local-strategy");
+//requiring passport jwt strategy from config
 const passpostJWT = require('./config/passport-jwt-strategy');
 //setting up mongo store
 const MongoStore = require('connect-mongo')(session); //(session) argument because we need to store the session informantion in the database 

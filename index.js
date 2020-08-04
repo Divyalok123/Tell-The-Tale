@@ -11,6 +11,8 @@ const passport = require("passport");
 const passportLocal = require("./config/passport-local-strategy");
 //requiring passport jwt strategy from config
 const passpostJWT = require('./config/passport-jwt-strategy');
+//requiring google-strategy
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
 //setting up mongo store
 const MongoStore = require('connect-mongo')(session); //(session) argument because we need to store the session informantion in the database 
 //requiring sass middleware

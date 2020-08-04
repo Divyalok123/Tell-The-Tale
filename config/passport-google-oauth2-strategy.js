@@ -8,14 +8,12 @@ passport.use(new googleStrategy({
     clientID: "194770133150-j9537tkqima5aqvpehjqa1c4u21ksjle.apps.googleusercontent.com",
     clientSecret: "l8vTu341CXiwVLy58xwJ9gok",
     callbackURL: "http://localhost:8000/users/auth/google/callback"
-
-    }, function(accessToken, refreshToken, profile, done){ //when the accessToken expires we use the refresh token to get a new access token
+    }, function(accessToken, refreshToken, profile, done){ //when the accessToken expires the refresh token is used to get a new access token
         //profile will contain users info
-
         //find a user
         User.findOne({email: profile.emails[0].value}).exec(function(err, user){
             if(err) {
-                console.log('Error finding the user in google strategy passport!: ', err);
+                console.log('Error finding the user in google passport strategy!: ', err);
                 return;
             }
 
@@ -23,9 +21,10 @@ passport.use(new googleStrategy({
 
             if(user) { //if found set this user as req.user
                 return done(null, user);
-            } else { //if not, create the user and set it as req.user(sign in that user)
+            } else { 
                 // return done(null, false); //!!Wrong!!
 
+                //if not found, create the user and set it as req.user(sign in that user)
                 //we create the user
                 User.create({
                     name: profile.displayName,

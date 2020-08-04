@@ -1,5 +1,6 @@
 const Comment = require("../models/comment");
 const Post = require("../models/post");
+const commentsMailer = require('../mailers/comments_mailer');
 
 module.exports.create = async function (req, res) {
 	try {
@@ -14,11 +15,12 @@ module.exports.create = async function (req, res) {
 
 			post.comments.push(comment);
 			post.save();
-
+			comment = await comment.populate("user", "name email").execPopulate();
+			commentsMailer.newComment(comment); //passing the comment to comment_mailer
 			if (req.xhr) {
 				//populating comment with a particular key (user)
 				//we need to use execPopulate for existing document
-				comment = await comment.populate("user", "name").execPopulate();
+				// comment = await comment.populate("user", "name").execPopulate();
 				return res.status(200).json({
 					data: {
 						comment: comment,

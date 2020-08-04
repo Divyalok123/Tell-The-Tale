@@ -1,6 +1,8 @@
 const Comment = require("../models/comment");
 const Post = require("../models/post");
 const commentsMailer = require('../mailers/comments_mailer');
+const queue = require('../config/kue');
+const commentEmailWorker = require('../workers/comment-mail-worker');
 
 module.exports.create = async function (req, res) {
 	try {
@@ -16,7 +18,19 @@ module.exports.create = async function (req, res) {
 			post.comments.push(comment);
 			post.save();
 			comment = await comment.populate("user", "name email").execPopulate();
-			commentsMailer.newComment(comment); //passing the comment to comment_mailer
+
+			// commentsMailer.newComment(comment); // -> passing the comment to comment_mailer
+			/* ↑ this neeeds to go to the kue as when a lot of tasks are there kue should handle it properly */
+
+			let job = queue.create('emails', comment).save(function(err){
+				if(err) {
+					console.log('Error in creating comment queue: ', err);
+					return;
+				}
+
+				console.log('Job id: ', job.id);
+			});
+
 			if (req.xhr) {
 				//populating comment with a particular key (user)
 				//we need to use execPopulate for existing document

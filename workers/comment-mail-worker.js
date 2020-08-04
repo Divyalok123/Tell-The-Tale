@@ -14,3 +14,5 @@ queue.process('emails', function(job, done){ //job contains the data
     commmentsMailer.newComment(job.data);
     done();
 });
+
+/* Run this command for Kue GUI: node node_modules/kue/bin/kue-dashboard */ 

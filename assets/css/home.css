@@ -9,7 +9,7 @@ main {
     resize: none;
     padding: 5px;
     font-family: 'Lato', sans-serif; }
-  main form > * {
+  main form > input {
     display: block;
     margin-top: 10px; }
 
@@ -20,3 +20,5 @@ main {
   #home_div #friends-list {
     width: 30%;
     border-left: 1px solid black; }
+    #home_div #friends-list a:hover {
+      color: #520e0e; }

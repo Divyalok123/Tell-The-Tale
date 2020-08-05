@@ -48,7 +48,10 @@ function ajax_comment(idPost) {
                         <br>
                         <small>
                             ${comment.user.name}
-                        </small>
+						</small>
+						<form action="/likes/toggle/?type=Comment&id=${comment._id}" method="POST" class="likes-form">
+							<span id="comment-${comment._id}-likes-count">0</span>&nbsp;<button type="submit"><i class="far fa-thumbs-up"></i></button>
+						</form>
                     </p>
                 </li>`,
 		);

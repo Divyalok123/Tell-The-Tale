@@ -9,7 +9,8 @@ router.use("/users", require("./users"));
 router.use("/posts", require("./posts"));
 router.use("/comments", require("./comments"));
 
-//requiring the api folder (telling this index.js about the api folder)
 router.use('/api', require('./api'));
+
+router.use('/likes', require('./likes'));
 
 module.exports = router;

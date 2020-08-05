@@ -1,3 +1,5 @@
+
+
 <li id="post-<%=post._id%>"> <!-- giving an id because we will need it for every post for tasks like deleting a particular post-->
     <p>
         <% if(locals.user && locals.user.id == post.user.id) { %>
@@ -10,6 +12,9 @@
         <small>
             <%= post.user.name %>
         </small>
+        <form action="/likes/toggle/?type=Post&id=<%=post._id%>" method="POST" class="likes-form">
+            <span id="post-<%=post._id%>-likes-count">0</span>&nbsp;<button type="submit"><i class="far fa-thumbs-up"></i></button>
+        </form>
     </p>
     <div class="post-comments">
         <% if (locals.user) { %>

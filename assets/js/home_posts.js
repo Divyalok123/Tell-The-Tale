@@ -57,7 +57,10 @@
                 <br>
                 <small>
                     ${post.user.name}
-                </small>
+				</small>
+				<form action="/likes/toggle/?type=Post&id=${post._id}" method="POST" class="likes-form">
+					<span id="post-${post._id}-likes-count">0</span>&nbsp;<button type="submit"><i class="far fa-thumbs-up"></i></button>
+				</form>
             </p>
             <div class="post-comments">
                 <form action="/comments/create" id="comment-${post._id}-form"method="POST">

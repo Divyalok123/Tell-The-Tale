@@ -1,0 +1,7 @@
+.likes-form button[type="submit"] {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  outline: none; }
+  .likes-form button[type="submit"]:hover {
+    color: #940808; }

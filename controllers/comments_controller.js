@@ -22,6 +22,7 @@ module.exports.create = async function (req, res) {
 			// commentsMailer.newComment(comment); // -> passing the comment to comment_mailer
 			/* ↑ this neeeds to go to the kue as when a lot of tasks are there kue should handle it properly */
 
+			/* //turning off email functionality for now
 			let job = queue.create('emails', comment).save(function(err){
 				if(err) {
 					console.log('Error in creating comment queue: ', err);
@@ -30,6 +31,7 @@ module.exports.create = async function (req, res) {
 
 				console.log('Job id: ', job.id);
 			});
+			*/
 
 			if (req.xhr) {
 				//populating comment with a particular key (user)

@@ -13,7 +13,7 @@ main {
             font-family: 'Lato', sans-serif;
         }
 
-        &>* {
+        &>input {
             display: block;
             margin-top: 10px;
         }
@@ -29,5 +29,9 @@ main {
     #friends-list {
         width: 30%;
         border-left: 1px solid black;
+
+        a:hover {
+            color: rgb(82, 14, 14);
+        }
     }
 }

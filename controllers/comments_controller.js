@@ -18,8 +18,8 @@ module.exports.create = async function (req, res) {
 
 			post.comments.push(comment);
 			post.save();
-			comment = await comment.populate("user", "name email").execPopulate();
-
+			comment = await comment.populate('user', 'name email').execPopulate();
+			console.log("From comments_controller, comment: ", comment);
 			// commentsMailer.newComment(comment); // -> passing the comment to comment_mailer
 			/* ↑ this neeeds to go to the kue as when a lot of tasks are there kue should handle it properly */
 

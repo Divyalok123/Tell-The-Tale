@@ -15,6 +15,8 @@ function ajax_comment(idPost) {
 					$(`#comments-post-${idPost}`).prepend(newCommentWithData);
 					deleteComment($(' .delete-comment-button', newCommentWithData));
 
+					new likesToggle($('.likes-toggler-button', newCommentWithData));
+
 					new Noty({
 						theme: "sunset",
 						text: "Comment added to the post!",
@@ -44,14 +46,14 @@ function ajax_comment(idPost) {
                         <small>
                             <a class="delete-comment-button" href="/comments/destroy/${comment._id}">x</a>
                         </small>
-                            ${comment.content}
+                        ${comment.content}
                         <br>
                         <small>
                             ${comment.user.name}
 						</small>
-						<form action="/likes/toggle/?type=Comment&id=${comment._id}" method="POST" class="likes-form">
-							<span id="comment-${comment._id}-likes-count">0</span>&nbsp;<button type="submit"><i class="far fa-thumbs-up"></i></button>
-						</form>
+						<a href="/likes/toggle/?type=Comment&id=${comment._id}" class="likes-toggler-button" id="0">
+							0 <i class="far fa-thumbs-up"></i>
+            			</a>	
                     </p>
                 </li>`,
 		);

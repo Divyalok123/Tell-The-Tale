@@ -1,8 +1,10 @@
 <li id="comment-<%=comment._id%>">
+    <% console.log("comment.user: ", comment.user) %>
+    <% console.log("comment: ", comment) %>
     <p>
-        <% if(locals.user && locals.user.id == comment.user.id) { %>
+        <% if(locals.user && locals.user.id == comment.user._id) { %>
         <small>
-            <a class="delete-comment-button" href="/comments/destroy/<%= comment.id %>">x</a>
+            <a class="delete-comment-button" href="/comments/destroy/<%= comment._id %>">x</a>
         </small>
         <% } %>
         <%= comment.content %>
@@ -15,10 +17,10 @@
         </form> -->
         <% if(locals.user) { %>
             <a href="/likes/toggle/?type=Comment&id=<%=comment._id%>" class="likes-toggler-button" id="<%= comment.likes.length %>">
-                <%= comment.likes.length %><i class="far fa-thumbs-up"></i>
+                <%= comment.likes.length %> <i class="far fa-thumbs-up"></i>
             </a>
         <% } else { %>
-            <%= comment.likes.length %><i class="far fa-thumbs-up"></i>
+            <%= comment.likes.length %> <i class="far fa-thumbs-up"></i>
         <% } %>
     </p>
 </li>

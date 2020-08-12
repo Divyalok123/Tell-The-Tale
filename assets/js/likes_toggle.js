@@ -15,7 +15,7 @@ class likesToggle {
                 url: $(self).attr('href')
             }).done(function(data){
                 let likesCount = parseInt($(self).attr('id'));
-                console.log(likesCount);
+                // console.log(likesCount);
                 if(data.data.previouslyLiked)
                     likesCount--;
                 else likesCount++;

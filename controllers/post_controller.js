@@ -15,12 +15,12 @@ module.exports.create = async function (req, res) {
 		if (req.xhr) {
 			//populating user with name(only)
 			//execPopulate needs to be called for an existing document for populate to execute
-			let new_post = await post.populate("user", "name").execPopulate();
+			post  = await post.populate('user', 'name').execPopulate();
 			// console.log("poulated post:", post);
 			return res.status(200).json({
 				//200 → success
 				data: {
-					post: new_post,
+					post: post,
 				},
 				message: "Post created!", //this will check if the post is created
 			});
@@ -30,6 +30,7 @@ module.exports.create = async function (req, res) {
 		return res.redirect("back");
 	} catch (err) {
 		req.flash("error", `Error! ${err}`);
+		console.log('Error in post controller->create: ', err);
 		return res.redirect("back");
 	}
 };
@@ -94,6 +95,7 @@ module.exports.destroy = async function (req, res) {
 		return res.redirect("back");
 	} catch (err) {
 		req.flash("error", `Error! ${err}`);
+		console.log('Error in post controller->destroy: ', err);
 		return res.redirect("back");
 	}
 };

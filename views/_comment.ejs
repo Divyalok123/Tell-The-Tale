@@ -1,6 +1,4 @@
 <li id="comment-<%=comment._id%>">
-    <% console.log("comment.user: ", comment.user) %>
-    <% console.log("comment: ", comment) %>
     <p>
         <% if(locals.user && locals.user.id == comment.user._id) { %>
         <small>
@@ -10,17 +8,19 @@
         <%= comment.content %>
         <br>
         <small>
-            <%= comment.user.name %>
+            <%= comment.user.name %> &nbsp;
         </small>
         <!-- <form action="/likes/toggle/?type=Comment&id=<%=comment._id%>" method="POST" class="likes-form">
             <span id="comment-<%=comment._id%>-likes-count">0</span> <button type="submit"><i class="far fa-thumbs-up"></i></button>
         </form> -->
-        <% if(locals.user) { %>
-            <a href="/likes/toggle/?type=Comment&id=<%=comment._id%>" class="likes-toggler-button" id="<%= comment.likes.length %>">
+        <small>
+            <% if(locals.user) { %>
+                <a href="/likes/toggle/?type=Comment&id=<%=comment._id%>" class="likes-toggler-button" id="<%= comment.likes.length %>">
+                    <%= comment.likes.length %> <i class="far fa-thumbs-up"></i>
+                </a>
+            <% } else { %>
                 <%= comment.likes.length %> <i class="far fa-thumbs-up"></i>
-            </a>
-        <% } else { %>
-            <%= comment.likes.length %> <i class="far fa-thumbs-up"></i>
-        <% } %>
+            <% } %>
+        </small>
     </p>
 </li>

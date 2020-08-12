@@ -8,7 +8,7 @@ module.exports.likestoggler = async function (req, res) {
 		let likeable;
         let previouslyLiked = false;
 
-		console.log('req.query: ', req.query);
+		// console.log('req.query: ', req.query);
 
 		if (req.query.type == 'Post')
 			likeable = await Post.findById(req.query.id).populate("likes");

@@ -41,7 +41,7 @@ function ajax_comment(idPost) {
 
 	let commentDOM = function (comment) {
 		return $(
-			`<li id="comment-${comment._id}">
+				`<li id="comment-${comment._id}">
                     <p>
                         <small>
                             <a class="delete-comment-button" href="/comments/destroy/${comment._id}">x</a>
@@ -49,14 +49,17 @@ function ajax_comment(idPost) {
                         ${comment.content}
                         <br>
                         <small>
-                            ${comment.user.name}
+                            ${comment.user.name} &nbsp;
 						</small>
-						<a href="/likes/toggle/?type=Comment&id=${comment._id}" class="likes-toggler-button" id="0">
-							0 <i class="far fa-thumbs-up"></i>
-            			</a>	
+						<small>
+							<a href="/likes/toggle/?type=Comment&id=${comment._id}" class="likes-toggler-button" id="0">
+								0 <i class="far fa-thumbs-up"></i>
+							</a>
+						</small>
+	
                     </p>
                 </li>`,
-		);
+				);
 	};
 
 	let deleteComment = function(deleteCommentLink) {

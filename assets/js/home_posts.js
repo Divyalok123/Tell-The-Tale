@@ -58,11 +58,13 @@
                     ${post.content}
                 <br>
                 <small>
-                    ${post.user.name}
+                    ${post.user.name} &nbsp;
 				</small>
-				<a href="/likes/toggle/?id=${post._id}&type=Post" class="likes-toggler-button" id="0">
-					0 <i class="far fa-thumbs-up"></i>
-            	</a>
+				<small>
+					<a href="/likes/toggle/?id=${post._id}&type=Post" class="likes-toggler-button" id="0">
+						0 <i class="far fa-thumbs-up"></i>
+					</a>
+				</small>
             </p>
             <div class="post-comments">
                 <form action="/comments/create" id="comment-${post._id}-form"method="POST">

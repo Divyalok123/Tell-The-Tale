@@ -36,6 +36,24 @@ module.exports.home = async function(req, res) {
     /* Error handling using try-catch */
     try {
         /* Asyn await */
+
+        /* //  !! This part is creating a problem: not able to show comment.user.name !!
+        // let posts = await Post.find({})
+        // .sort('-createdAt') //to sort in the reverse chronological order i.e. latest post first
+        // .populate('user')
+        // .populate({
+        //     path: 'comments',
+        //     populate: {
+        //         path: 'user'
+        //     },
+        //     populate: {
+        //         path: 'likes'
+        //     }
+        // }).populate('comments')
+        // .populate('likes'); 
+
+        */
+
         let posts = await Post.find({})
         .sort('-createdAt') //to sort in the reverse chronological order i.e. latest post first
         .populate('user')
@@ -43,12 +61,8 @@ module.exports.home = async function(req, res) {
             path: 'comments',
             populate: {
                 path: 'user'
-            },
-            populate: { //we need to populate with likes too
-                path: 'likes'
             }
-        }).populate('comments') //populating the likes of each post and comment
-        .populate('likes'); 
+        }).populate('likes');
 
         let users = await User.find({});
 

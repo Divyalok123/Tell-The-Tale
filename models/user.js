@@ -22,6 +22,16 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String
     }
+    /*  
+        Schema for reference
+        To do: complete friendships.
+    */
+    // friendships: [
+    //     { 
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'Friendship' 
+    //     }
+    // ]
 }, {
     timestamps: true //to know when it was created and when updated
 });

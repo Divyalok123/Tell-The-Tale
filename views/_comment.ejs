@@ -10,8 +10,15 @@
         <small>
             <%= comment.user.name %>
         </small>
-        <form action="/likes/toggle/?type=Comment&id=<%=comment._id%>" method="POST" class="likes-form">
-            <span id="comment-<%=comment._id%>-likes-count">0</span>&nbsp;<button type="submit"><i class="far fa-thumbs-up"></i></button>
-        </form>
+        <!-- <form action="/likes/toggle/?type=Comment&id=<%=comment._id%>" method="POST" class="likes-form">
+            <span id="comment-<%=comment._id%>-likes-count">0</span> <button type="submit"><i class="far fa-thumbs-up"></i></button>
+        </form> -->
+        <% if(locals.user) { %>
+            <a href="/likes/toggle/?type=Comment&id=<%=comment._id%>" class="likes-toggler-button" id="<%= comment.likes.length %>">
+                <%= comment.likes.length %><i class="far fa-thumbs-up"></i>
+            </a>
+        <% } else { %>
+            <%= comment.likes.length %><i class="far fa-thumbs-up"></i>
+        <% } %>
     </p>
 </li>

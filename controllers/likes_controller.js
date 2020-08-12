@@ -6,51 +6,45 @@ module.exports.likestoggler = async function (req, res) {
 	try {
 		//route-> likes/toggle/id=""&type=""
 		let likeable;
-        let liked = false;
+        let previouslyLiked = false;
 
-        console.log('req.query: ', req.query);
-        console.log('req.query.type: ', req.query.type);
-        console.log('req.query.id: ', req.query.id);
+		console.log('req.query: ', req.query);
 
-		if (req.query.type == "Post")
-			likeable = await Post.findById(req.query.id, function (err) {
-				console.log("Error while finding post: ", err);
-			}).populate("likes");
+		if (req.query.type == 'Post')
+			likeable = await Post.findById(req.query.id).populate("likes");
 		else
-			likeable = await Comment.findById(req.query.id, function (err) {
-				console.log("Error while finding comment: ", err);
-			}).populate("likes");
+			likeable = await Comment.findById(req.query.id).populate("likes");
 
-		console.log("likeable: ", likeable);
+		// console.log("likeable: ", likeable);
 
 		let doeslikeexits = await Like.findOne({
-			user: req.user.id,
+			user: req.user._id,
 			likeable: req.query.id,
 			onModel: req.query.type,
 		});
 
-		console.log("doeslikeexits: ", doeslikeexits);
+		// console.log("doeslikeexits: ", doeslikeexits);
 
 		if (doeslikeexits) {
 			likeable.likes.pull(doeslikeexits._id);
 			likeable.save();
 			doeslikeexits.remove();
-			liked = false;
+			previouslyLiked = true;
 		} else {
 			let newlike = await Like.create({
-				user: req.user.id,
+				user: req.user._id,
 				likeable: req.query.id,
 				onModel: req.query.type,
 			});
+			// console.log(newlike);
 			likeable.likes.push(newlike._id);
 			likeable.save();
-			liked = true; //in doubt for now
 		}
 
 		return res.status(200).json({
 			message: "Like successfully created/destroyed",
 			data: {
-				liked: liked,
+				previouslyLiked: previouslyLiked,
 			},
 		});
 	} catch (err) {

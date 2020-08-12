@@ -1,6 +1,7 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 const User = require("../models/user");
+const Like = require('../models/like');
 
 module.exports.create = async function (req, res) {
 	try {
@@ -12,7 +13,7 @@ module.exports.create = async function (req, res) {
 		//check if the request is a ajax request from home_post.js createpost
 		//xhr -> xmlHttpRequest
 		if (req.xhr) {
-			//populating user with name
+			//populating user with name(only)
 			//execPopulate needs to be called for an existing document for populate to execute
 			let new_post = await post.populate("user", "name").execPopulate();
 			// console.log("poulated post:", post);
@@ -65,6 +66,9 @@ module.exports.destroy = async function (req, res) {
 	try {
 		let post = await Post.findById(req.params.id);
 		if (post.user == req.user.id) {
+			await Like.deleteMany({likeable: post._id, onModel: 'Post'}); //!may need to change!
+			await Like.deleteMany({_id: {$in: post.comments}});
+
 			//deleting the post
 			post.remove();
 

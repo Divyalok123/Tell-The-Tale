@@ -38,13 +38,21 @@ module.exports.home = async function(req, res) {
         /* Asyn await */
         let posts = await Post.find({})
         .sort('-createdAt') //to sort in the reverse chronological order i.e. latest post first
-        .populate('user')
+        .populate('user', 'name email _id createdAt updatedAt')
         .populate({
             path: 'comments',
             populate: {
                 path: 'user'
+            },
+            populate: { //we need to populate with likes too
+                path: 'likes'
             }
-        });
+        })
+        .populate('comments') //populating the likes of each post and comment
+        .populate('likes'); 
+
+        console.log("printing posts: ", posts);
+        console.log('printing first post\'s comments: ', posts[0].comments);
 
         let users = await User.find({});
 

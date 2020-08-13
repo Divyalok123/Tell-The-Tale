@@ -22,6 +22,16 @@ const flash = require('connect-flash');
 //requiring custom middleware for flash messages
 const flashware = require('./config/middleware');
 
+//using socket.io for chatting engine
+const chatServer = require('http').Server(app); 
+//requiring file and function for socket config 
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+//socket server will be running at a different port
+chatServer.listen(5000);
+console.log('Chatserver is listening at port 5000!');
+
+
+
 //just before the server starts so that we can precompile it before the server starts and whenever the browser asks for it, these precompiled files will be provided 
 app.use(sassMiddleware({
 	src: './assets/scss',

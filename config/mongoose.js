@@ -1,8 +1,11 @@
 //requiring mongoose
 const mongoose = require('mongoose');
 
+//getting deployment ready
+const env = require('./environment');
+
 //setting up connection with database
-mongoose.connect('mongodb://localhost:27017/tell_the_tale_development', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(`mongodb://localhost:27017/${env.db}`, {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection;
 

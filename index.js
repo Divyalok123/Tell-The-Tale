@@ -1,4 +1,9 @@
 const express = require("express");
+
+/* getting ready for deployment */
+//requiring environment config
+const env = require('./config/environment');
+
 const cookieParser = require("cookie-parser");
 const app = express();
 const port = 8000;
@@ -31,11 +36,15 @@ chatServer.listen(5000);
 console.log('Chatserver is listening at port 5000!');
 
 
+const path = require('path');
+
+console.log('printing from index: ',  path.join(__dirname, env.asset_path, 'css'));
 
 //just before the server starts so that we can precompile it before the server starts and whenever the browser asks for it, these precompiled files will be provided 
 app.use(sassMiddleware({
-	src: './assets/scss',
-	dest: './assets/css',
+	// src: './assets/scss',
+	src: path.join(__dirname, env.asset_path, 'scss'),
+	dest: path.join(__dirname, env.asset_path, 'css'),
 	debug: true, //it should be false in production mode
 	outputStyle: 'extended', //whether we want it to be single line or multiline
 	prefix: '/css' //where should the server look for css files
@@ -48,7 +57,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 //for using static files
-app.use(express.static("./assets"));
+app.use(express.static(env.asset_path)); //for development env.
 
 //(making upload path available to browser)
 app.use('/uploads', express.static(__dirname + '/uploads'));
@@ -67,7 +76,7 @@ app.set("views", "./views");
 app.use(
 	session({
         name: "Tell_the_tale", //name of cookie
-		secret: 'to_decode_encode', //whenever encryption happens there is a key to encode and decode it, this is used for that *(it should be changed)*
+		secret: env.session_cookie_key, //whenever encryption happens there is a key to encode and decode it, this is used for that *(it should be changed)*
 		saveUninitialized: false,
 		resave: false,
 		cookie: {

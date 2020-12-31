@@ -4,11 +4,14 @@ const express = require("express");
 //requiring environment config
 const env = require('./config/environment');
 
+//for getting logs in a file during production env
+const logger = require('morgan'); 
 const cookieParser = require("cookie-parser");
 const app = express();
 const port = 8000;
 const expressLayouts = require("express-ejs-layouts");
 const db = require("./config/mongoose");
+
 //express session (used for session cookie)
 const session = require("express-session");
 //requiring the passport and the local-strategy we set up
@@ -38,17 +41,19 @@ console.log('Chatserver is listening at port 5000!');
 
 const path = require('path');
 
-console.log('printing from index: ',  path.join(__dirname, env.asset_path, 'css'));
+// console.log('printing from index: ',  path.join(__dirname, env.asset_path, 'css'));
 
 //just before the server starts so that we can precompile it before the server starts and whenever the browser asks for it, these precompiled files will be provided 
-app.use(sassMiddleware({
-	// src: './assets/scss',
-	src: path.join(__dirname, env.asset_path, 'scss'),
-	dest: path.join(__dirname, env.asset_path, 'css'),
-	debug: true, //it should be false in production mode
-	outputStyle: 'extended', //whether we want it to be single line or multiline
-	prefix: '/css' //where should the server look for css files
-})); 
+if(env.name == 'development') {
+	app.use(sassMiddleware({
+		// src: './assets/scss',
+		src: path.join(__dirname, env.asset_path, 'scss'),
+		dest: path.join(__dirname, env.asset_path, 'css'),
+		debug: true, //it should be false in production mode
+		outputStyle: 'extended', //whether we want it to be single line or multiline
+		prefix: '/css' //where should the server look for css files
+	})); 
+}
 
 //reading post requests
 app.use(express.urlencoded({ extended: true }));
@@ -57,7 +62,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 //for using static files
-app.use(express.static(env.asset_path)); //for development env.
+app.use(express.static(path.join(__dirname, env.asset_path))); 
 
 //(making upload path available to browser)
 app.use('/uploads', express.static(__dirname + '/uploads'));

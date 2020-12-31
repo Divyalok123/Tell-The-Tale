@@ -1,7 +1,15 @@
+const fs = require('fs');
+const rfs = require('rotating-file-stream');
+const path = require('path');
+
+//where the logs will be stored
+const logDirectory = path.join(__dirname, '../production_logs');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
 
 const development = {
     name: 'development',
-    asset_path: "./assets",
+    asset_path: './assets',
     session_cookie_key: "to_decode_encode",
     db: 'tell_the_tale_development',
     smtp: {
@@ -43,4 +51,6 @@ const production = {
     jwt_secret: process.env.TELL_THE_TALE_JWT_SECRET
 }
 
-module.exports = eval(process.env.TELL_THE_TALE_ENVIRONMENT) == undefined ? development : eval(process.env.TELL_THE_TALE_ENVIRONMENT);
+// module.exports = development;
+// module.exports = production;
+module.exports = (eval(process.env.TELL_THE_TALE_ENVIRONMENT) == undefined) ? development : eval(process.env.TELL_THE_TALE_ENVIRONMENT);

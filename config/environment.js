@@ -4,8 +4,13 @@ const path = require('path');
 
 //where the logs will be stored
 const logDirectory = path.join(__dirname, '../production_logs');
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+//find if production logs file already exit or it should be created
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory); 
 
+const accessLogStream = rfs.createStream('access.log', {
+    interval: '1d',
+    path: logDirectory
+});
 
 const development = {
     name: 'development',
@@ -26,7 +31,13 @@ const development = {
     google_client_id: '194770133150-j9537tkqima5aqvpehjqa1c4u21ksjle.apps.googleusercontent.com',
     google_client_secret: 'l8vTu341CXiwVLy58xwJ9gok',
     google_callback_url: 'http://localhost:8000/users/auth/google/callback',
-    jwt_secret: 'tell_the_tale'
+    jwt_secret: 'tell_the_tale',
+    morgan: {
+        mode: 'dev',
+        options: {
+            stream: accessLogStream
+        }
+    }
 }
 
 const production = {
@@ -48,7 +59,13 @@ const production = {
     google_client_id: process.env.TELL_THE_TALE_GOOGLE_CLIENT_ID,
     google_client_secret: process.env.TELL_THE_TALE_GOOGLE_CLIENT_SECRET,
     google_callback_url: process.env.TELL_THE_TALE_GOOGLE_CALLBACK_URL,
-    jwt_secret: process.env.TELL_THE_TALE_JWT_SECRET
+    jwt_secret: process.env.TELL_THE_TALE_JWT_SECRET,
+    morgan: {
+        mode: 'combined',
+        options: {
+            stream: accessLogStream
+        }
+    }
 }
 
 // module.exports = development;

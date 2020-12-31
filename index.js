@@ -67,6 +67,9 @@ app.use(express.static(path.join(__dirname, env.asset_path)));
 //(making upload path available to browser)
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
+//using logger
+app.use(logger(env.morgan.mode, env.morgan.options));
+
 //using layouts
 app.use(expressLayouts);
 

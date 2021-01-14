@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish&family=Sora:wght@500&display=swap");
+header {
+  background-color: wheat;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  display: flex;
+  padding: 0 18px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px; }
+  header #logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.3em;
+    color: black; }
+  header ul {
+    font-family: 'Mulish', sans-serif; }
+    header ul a:hover {
+      color: gray; }
+  header a {
+    text-decoration: none;
+    margin: 0 10px; }

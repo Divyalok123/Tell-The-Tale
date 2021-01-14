@@ -1,0 +1,16 @@
+.user-profile-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center; }
+  .user-profile-div #user-image {
+    border-radius: 50%; }
+    .user-profile-div #user-image img {
+      border-radius: 50%; }
+  .user-profile-div #user-details input[type="submit"], .user-profile-div #user-details input[type="file"] {
+    padding: 5px 10px;
+    outline: none;
+    border: 1px solid black;
+    background-color: wheat;
+    cursor: pointer; }

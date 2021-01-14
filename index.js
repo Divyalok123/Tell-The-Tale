@@ -7,7 +7,10 @@ const env = require('./config/environment');
 //for getting logs in a file during production env
 const logger = require('morgan'); 
 const cookieParser = require("cookie-parser");
+
 const app = express();
+require('./config/view-helpers')(app);
+
 const port = 8000;
 const expressLayouts = require("express-ejs-layouts");
 const db = require("./config/mongoose");
@@ -63,6 +66,7 @@ app.use(cookieParser());
 
 //for using static files
 app.use(express.static(path.join(__dirname, env.asset_path))); 
+// app.use(express.static(env.asset_path)); 
 
 //(making upload path available to browser)
 app.use('/uploads', express.static(__dirname + '/uploads'));

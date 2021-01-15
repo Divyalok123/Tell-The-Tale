@@ -23,7 +23,7 @@ const del = require('del');
 //one of the tasks is to minimise the css
 gulp.task('css', function(done){
     console.log('Minifying the CSS.');
-    gulp.src('./assets/scss/**/*.scss')
+    gulp.src('./assets/**/*.scss')
     .pipe(sass()) //converting
     .pipe(cssnano()) //compressing
     .pipe(gulp.dest('./assets/scss')); //**to check**
@@ -57,7 +57,7 @@ gulp.task('js', function(done){
 //minifying images
 gulp.task('images', function(done){
     console.log('Minifying images.');
-    gulp.src('./assets/**/*.+(png|jpeg|jpg|gif|svg)')
+    gulp.src('./assets/**/*.+(png|jpeg|jpg|gif|svg|ico)')
     .pipe(imagemin())
     .pipe(rev())
     .pipe(gulp.dest('./public/assets'))

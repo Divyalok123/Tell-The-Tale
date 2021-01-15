@@ -72,4 +72,4 @@ const production = {
 
 var thisenvironment = eval(process.env.TELL_THE_TALE_ENVIRONMENT);
 // console.log(thisenvironment);
-module.exports = (thisenvironment == undefined) ? development : eval(process.env.TELL_THE_TALE_ENVIRONMENT);
+module.exports = (thisenvironment == undefined) ? development : eval(thisenvironment);

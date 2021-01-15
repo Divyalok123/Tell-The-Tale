@@ -23,17 +23,17 @@ const del = require('del');
 //one of the tasks is to minimise the css
 gulp.task('css', function(done){
     console.log('Minifying the CSS.');
-    gulp.src('./assets/**/*.scss')
+    gulp.src('./assets/scss/**/*.scss')
     .pipe(sass()) //converting
     .pipe(cssnano()) //compressing
-    .pipe(gulp.dest('./assets/scss')); //**to check**
+    .pipe(gulp.dest('./assets/css')); 
 
     gulp.src('./assets/**/*.css')
     .pipe(rev())
     .pipe(gulp.dest('./public/assets'))
     .pipe(rev.manifest({
         cwd: 'public',
-        merge: true
+        merge: true 
     }))
     .pipe(gulp.dest('./public/assets'));
     done();
@@ -48,7 +48,7 @@ gulp.task('js', function(done){
     .pipe(gulp.dest('./public/assets'))
     .pipe(rev.manifest({
         cwd: 'public',
-        merge: true
+        merge: true //if already exits just merge
     }))
     .pipe(gulp.dest('./public/assets'));
     done();

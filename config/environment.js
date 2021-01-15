@@ -68,8 +68,8 @@ const production = {
     }
 }
 
-module.exports = development;
+// module.exports = development;
 
-// var thisenvironment = eval(process.env.TELL_THE_TALE_ENVIRONMENT);
-// // console.log(thisenvironment);
-// module.exports = (thisenvironment == undefined) ? development : eval(process.env.TELL_THE_TALE_ENVIRONMENT);
+var thisenvironment = eval(process.env.TELL_THE_TALE_ENVIRONMENT);
+// console.log(thisenvironment);
+module.exports = (thisenvironment == undefined) ? development : eval(process.env.TELL_THE_TALE_ENVIRONMENT);

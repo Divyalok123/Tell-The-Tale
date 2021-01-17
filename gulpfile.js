@@ -81,7 +81,7 @@ gulp.task('clean:assets', function(done){
 });
 
 //a task to run all the above tasks together (rather than independently)
-gulp.task('build', gulp.series('clean:assets', 'css', 'js', 'images'), function(done){
-    console.log('Building all tasks');
+gulp.task('build', gulp.series('clean:assets', 'css', 'js', 'images'), function(done) {
+    console.log("Built all tasks");
     done();
 });

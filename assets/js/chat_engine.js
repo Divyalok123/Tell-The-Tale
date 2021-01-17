@@ -7,7 +7,7 @@ class chattingEngine {
 
         //as soon as the class is called 
         //we will send a connection request
-        this.socket = io.connect('http://localhost:5000');
+        this.socket = io.connect('http://54.174.38.65:5000');
         
         if(this.usermail)
             this.connectionHandler();  //and then we check if the connection is done

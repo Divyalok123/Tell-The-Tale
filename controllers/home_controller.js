@@ -72,7 +72,7 @@ module.exports.home = async function(req, res) {
             posts: posts,
             userProfiles: users
         });
-    }catch(err) {
+    } catch(err) {
         console.log('Error occured while fetching home items: ', err);
         return;
     }
